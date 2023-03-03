@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import AuthLayout from '../../../layouts/AuthLayout';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -16,25 +17,26 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
+    <AuthLayout>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    </AuthLayout>
   );
 };
 
@@ -42,25 +44,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-  },
-  heading: {
-    fontSize: 30,
-    marginBottom: 50,
+    padding: 36,
   },
   input: {
-    width: '80%',
+    width: '100%',
     padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
     marginBottom: 20,
-    borderRadius: 5,
+    borderRadius: 12,
+    height: 50,
+    backgroundColor: '#F0F4F9',
   },
   button: {
     backgroundColor: '#2196F3',
     padding: 10,
     borderRadius: 5,
+    height: 50,
   },
   buttonText: {
     color: '#fff',
