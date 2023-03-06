@@ -4,6 +4,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import LoginScreen from './src/pages/Auth/Login';
 import YourLanguageScreen from './src/pages/YourLanguage';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -12,20 +15,22 @@ const App = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="YourLanguage">
-        <Stack.Screen
-          name="YourLanguage"
-          component={YourLanguageScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="YourLanguage">
+          <Stack.Screen
+            name="YourLanguage"
+            component={YourLanguageScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
