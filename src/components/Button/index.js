@@ -2,9 +2,14 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {COLORS} from '../../util/colors';
 
-const Button = ({title, uppercase}) => {
+const Button = ({title, uppercase, disabled}) => {
   return (
-    <View style={[styles.container, uppercase && styles.uppercase]}>
+    <View
+      style={[
+        styles.container,
+        uppercase && styles.uppercase,
+        disabled && styles.disabled,
+      ]}>
       <Text style={styles.name}>{title}</Text>
     </View>
   );
@@ -20,6 +25,9 @@ const styles = StyleSheet.create({
   },
   uppercase: {
     textTransform: 'uppercase',
+  },
+  disabled: {
+    backgroundColor: COLORS.lightGreen,
   },
   name: {
     fontSize: 20,
