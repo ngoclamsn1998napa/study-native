@@ -1,30 +1,25 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {COLORS} from '../../util/colors';
 
-const Button = ({currentLang, lang, onChangeLang, title}) => {
+const Button = ({title, uppercase}) => {
   return (
-    <Pressable style={[styles.container]} onPress={onChangeLang}>
-      <View style={styles.box}>
-        <Text style={styles.name}>{title}</Text>
-      </View>
-    </Pressable>
+    <View style={[styles.container, uppercase && styles.uppercase]}>
+      <Text style={styles.name}>{title}</Text>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    columnGap: 10,
-    padding: 20,
-  },
-  box: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     height: 54,
     borderRadius: 40,
     backgroundColor: COLORS.primary,
+  },
+  uppercase: {
+    textTransform: 'uppercase',
   },
   name: {
     fontSize: 20,

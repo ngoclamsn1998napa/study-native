@@ -2,5 +2,11 @@
   "choose_your_lang": "Chọn ngôn ngữ",
   "vi": "Việt Nam",
   "en": "Tiếng Anh",
-  "get_started": "BẮT ĐẦU"
+  "get_started": "BẮT ĐẦU",
+  "email": "Email",
+  "password": "Mật khẩu",
+  "login": "Đăng nhập",
+  "forgot_password": "Quên mật khẩu",
+  "dont_have_an_account": "Bạn chưa có tài khoản?",
+  "sign_up": "Đăng ký"
 }

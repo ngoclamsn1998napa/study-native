@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Button from '../../components/Button';
 import Language from '../../components/Language';
 import AuthLayout from '../../layouts/AuthLayout';
@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeLanguage} from '../../redux/language-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const YourLanguageScreen = () => {
+const YourLanguageScreen = ({navigation}) => {
   useSelector(state => state.language.locale);
   const dispatch = useDispatch();
   const onHandleChangeLanguage = language => {
@@ -21,9 +21,9 @@ const YourLanguageScreen = () => {
   return (
     <AuthLayout>
       <View style={styles.container}>
-        <View style={{flex: 1, justifyContent: 'space-between', width: '100%'}}>
+        <View style={styles.box}>
           <View>
-            <View style={{alignItems: 'center'}}>
+            <View style={styles.center}>
               <Text style={styles.h1}>{i18n.t('choose_your_lang')}</Text>
             </View>
             <View style={styles.row}>
@@ -41,9 +41,9 @@ const YourLanguageScreen = () => {
               />
             </View>
           </View>
-          <View>
-            <Button title={i18n.t('get_started')} />
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Button uppercase={true} title={i18n.t('get_started')} />
+          </TouchableOpacity>
         </View>
       </View>
     </AuthLayout>
@@ -55,9 +55,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: COLORS.white,
   },
+  center: {
+    alignItems: 'center',
+  },
+  box: {flex: 1, justifyContent: 'space-between', width: '100%'},
   row: {rowGap: 20, width: '100%'},
   h1: {
     fontSize: 24,

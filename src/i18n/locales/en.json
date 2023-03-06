@@ -2,5 +2,11 @@
   "choose_your_lang": "Choose your language",
   "vi": "Vietnamese",
   "en": "English",
-  "get_started": "GET STARTED"
+  "get_started": "GET STARTED",
+  "email": "Email",
+  "password": "Password",
+  "login": "Sign in",
+  "forgot_password": "Forgot Password",
+  "dont_have_an_account": "Don't have an account?",
+  "sign_up": "Sign Up"
 }

@@ -22,6 +22,10 @@ const AuthLayout = ({children}) => (
         />
         <View style={styles.divider}></View>
         {children}
+        <ImageBackground
+          style={styles.footerBackground}
+          source={require('../../assets/auth_footer.png')}
+        />
       </View>
     </TouchableWithoutFeedback>
   </KeyboardAvoidingView>
@@ -31,13 +35,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    justifyContent: 'flex-start',
     backgroundColor: COLORS.white,
   },
   headerBackground: {
-    flex: 1,
-    justifyContent: 'flex-start',
     width: '100%',
     height: 272,
+  },
+  footerBackground: {
+    width: '100%',
+    height: 155,
   },
   divider: {
     borderBottomColor: COLORS.primary3,
@@ -46,9 +53,9 @@ const styles = StyleSheet.create({
     marginRight: 36,
   },
   inner: {
-    paddingBottom: 60,
+    paddingBottom: 0,
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
   },
 });
 

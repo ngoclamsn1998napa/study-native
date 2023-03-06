@@ -17,7 +17,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="YourLanguage">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="YourLanguage"
             component={YourLanguageScreen}
