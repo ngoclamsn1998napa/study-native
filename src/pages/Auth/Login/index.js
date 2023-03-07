@@ -17,15 +17,13 @@ const LoginScreen = () => {
   const {
     control,
     handleSubmit,
-    formState: {errors, dirtyFields},
+    formState: {errors, isValid},
   } = useForm({
     mode: 'onChange',
   });
   const onSubmit = data => {
     console.log(data);
   };
-
-  const isFormEmpty = Object.keys(dirtyFields).length === 0;
   return (
     <AuthLayout>
       <View style={styles.container}>
@@ -83,11 +81,11 @@ const LoginScreen = () => {
           </View>
         </View>
         <TouchableOpacity
-          disabled={isFormEmpty}
+          disabled={!isValid}
           style={{marginBottom: 30}}
           onPress={handleSubmit(onSubmit)}>
           <Button
-            disabled={isFormEmpty}
+            disabled={!isValid}
             uppercase={true}
             title={i18n.t('login')}
           />
