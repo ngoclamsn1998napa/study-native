@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     padding: 36,
   },
   col: {
-    rowGap: 30,
+    rowGap: 20,
   },
   forgotPassword: {
     alignItems: 'center',
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     color: COLORS.orange2,
     fontWeight: 700,
     fontSize: 17,
-    marginBottom: 30,
+    marginBottom: 20,
   },
   existAccount: {
     flexDirection: 'row',

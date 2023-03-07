@@ -61,8 +61,11 @@ const styles = StyleSheet.create({
     height: 272,
   },
   footerBackground: {
+    position: 'absolute',
+    bottom: 0,
     width: '100%',
     height: 155,
+    zIndex: -1,
   },
   divider: {
     borderBottomColor: COLORS.primary3,

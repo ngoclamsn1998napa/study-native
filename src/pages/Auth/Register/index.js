@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     padding: 36,
   },
   col: {
-    rowGap: 30,
+    rowGap: 20,
   },
   existAccount: {
     flexDirection: 'row',
