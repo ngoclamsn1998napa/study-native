@@ -8,5 +8,12 @@
   "login": "Đăng nhập",
   "forgot_password": "Quên mật khẩu",
   "dont_have_an_account": "Bạn chưa có tài khoản?",
-  "sign_up": "Đăng ký"
+  "sign_up": "Đăng ký",
+  "name": "Tên",
+  "gender": "Giới tính",
+  "birthday": "Ngày sinh, Vd: 20/03/1997",
+  "uni": "Trường đại học",
+  "confirm_password": "Xác nhận mật khẩu",
+  "already_have_account": "Bạn đã có tài khoản?",
+  "sign_in": "Đăng nhập"
 }

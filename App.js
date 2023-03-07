@@ -6,6 +6,7 @@ import LoginScreen from './src/pages/Auth/Login';
 import YourLanguageScreen from './src/pages/YourLanguage';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
+import RegisterScreen from './src/pages/Auth/Register';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,11 @@ const App = () => {
           <Stack.Screen
             name="Login"
             component={LoginScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

@@ -8,5 +8,12 @@
   "login": "Sign in",
   "forgot_password": "Forgot Password",
   "dont_have_an_account": "Don't have an account?",
-  "sign_up": "Sign Up"
+  "sign_up": "Sign Up",
+  "name": "Name",
+  "gender": "Gender",
+  "birthday": "Birthday, ex: 20/03/1997",
+  "uni": "University",
+  "confirm_password": "Confirm Password",
+  "already_have_account": "Already have account?",
+  "sign_in": "Sign In"
 }
