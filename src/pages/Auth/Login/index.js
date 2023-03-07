@@ -1,3 +1,4 @@
+import {unwrapResult} from '@reduxjs/toolkit';
 import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
@@ -8,13 +9,17 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import Button from '../../../components/Button';
 import i18n from '../../../i18n';
 import AuthLayout from '../../../layouts/AuthLayout';
+import {authSelector, signIn} from '../../../redux/authSlice';
 import {COLORS} from '../../../util/colors';
 import {REGEX} from '../../../util/regex';
 
 const LoginScreen = ({navigation}) => {
+  const auth = useSelector(authSelector);
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -22,8 +27,21 @@ const LoginScreen = ({navigation}) => {
   } = useForm({
     mode: 'onChange',
   });
-  const onSubmit = data => {
+  const onSubmit = async data => {
     console.log(data);
+    try {
+      const actionResult = await dispatch(
+        signIn({email: data.email, password: data.password}),
+      );
+      console.log('sssss', actionResult);
+
+      const response = unwrapResult(actionResult);
+      console.log('sssss', response);
+
+      if (response.data.access_token) {
+        console.log('sssss', response);
+      }
+    } catch (error) {}
   };
   return (
     <AuthLayout>

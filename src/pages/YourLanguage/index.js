@@ -6,7 +6,7 @@ import AuthLayout from '../../layouts/AuthLayout';
 import {COLORS} from '../../util/colors';
 import i18n from '../../i18n';
 import {useDispatch, useSelector} from 'react-redux';
-import {changeLanguage} from '../../redux/language-slice';
+import {changeLanguage} from '../../redux/languageSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const YourLanguageScreen = ({navigation}) => {
