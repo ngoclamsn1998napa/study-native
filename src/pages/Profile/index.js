@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import {
   View,
@@ -6,99 +7,102 @@ import {
   Image,
   Pressable,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {COLORS} from '../../util/colors';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {setLoggedIn} from '../../redux/authSlice';
 
-const ProfileScreen = ({navigation}) => {
+const ProfileScreen = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const onHandleLogout = async () => {
+    const token = await AsyncStorage.removeItem('access_token');
+    dispatch(setLoggedIn(!!token));
+    navigation.navigate('Login');
+  };
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.profile}>
-            <Text style={styles.profileText}>Profile</Text>
-            <Pressable>
-              <Image source={require('../../assets/icons/edit.png')} />
-            </Pressable>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.profile}>
+          <Text style={styles.profileText}>Profile</Text>
+          <Pressable>
+            <Image source={require('../../assets/icons/edit.png')} />
+          </Pressable>
+        </View>
+        <View style={styles.profileInfo}>
+          <View style={styles.profileInfoAvatar}>
+            <Image source={require('../../assets/avatar.png')} />
           </View>
-          <View style={styles.profileInfo}>
-            <View style={styles.profileInfoAvatar}>
-              <Image source={require('../../assets/avatar.png')} />
-            </View>
-            <View>
-              <Text style={styles.profileInfoName}>Thanh Pham</Text>
-              <Text>thanhpham@gmail.com</Text>
-            </View>
+          <View>
+            <Text style={styles.profileInfoName}>Thanh Pham</Text>
+            <Text>thanhpham@gmail.com</Text>
           </View>
         </View>
-        <View style={styles.content}>
-          <View style={styles.listItem}>
-            <Pressable>
-              <View style={styles.itemCard}>
-                <View style={styles.itemCardInfo}>
-                  <Image
-                    source={require('../../assets/icons/profile_target.png')}
-                  />
-                  <Text style={styles.itemCardInfoTitle}>Target Setting</Text>
-                </View>
+      </View>
+      <View style={styles.content}>
+        <View style={styles.listItem}>
+          <Pressable>
+            <View style={styles.itemCard}>
+              <View style={styles.itemCardInfo}>
                 <Image
-                  source={require('../../assets/icons/profile_next.png')}
+                  source={require('../../assets/icons/profile_target.png')}
                 />
+                <Text style={styles.itemCardInfoTitle}>Target Setting</Text>
               </View>
-            </Pressable>
-            <Pressable>
-              <View style={styles.itemCard}>
-                <View style={styles.itemCardInfo}>
-                  <Image
-                    source={require('../../assets/icons/profile_feedback.png')}
-                  />
-                  <Text style={styles.itemCardInfoTitle}>Tutorial</Text>
-                </View>
+              <Image source={require('../../assets/icons/profile_next.png')} />
+            </View>
+          </Pressable>
+          <Pressable>
+            <View style={styles.itemCard}>
+              <View style={styles.itemCardInfo}>
                 <Image
-                  source={require('../../assets/icons/profile_next.png')}
+                  source={require('../../assets/icons/profile_feedback.png')}
                 />
+                <Text style={styles.itemCardInfoTitle}>Tutorial</Text>
               </View>
-            </Pressable>
-            <Pressable>
-              <View style={styles.itemCard}>
-                <View style={styles.itemCardInfo}>
-                  <Image
-                    source={require('../../assets/icons/profile_tutorial.png')}
-                  />
-                  <Text style={styles.itemCardInfoTitle}>Feedback</Text>
-                </View>
+              <Image source={require('../../assets/icons/profile_next.png')} />
+            </View>
+          </Pressable>
+          <Pressable>
+            <View style={styles.itemCard}>
+              <View style={styles.itemCardInfo}>
                 <Image
-                  source={require('../../assets/icons/profile_next.png')}
+                  source={require('../../assets/icons/profile_tutorial.png')}
                 />
+                <Text style={styles.itemCardInfoTitle}>Feedback</Text>
               </View>
-            </Pressable>
-            <Pressable>
-              <View style={styles.itemCard}>
-                <View style={styles.itemCardInfo}>
-                  <Image
-                    source={require('../../assets/icons/profile_change_password.png')}
-                  />
-                  <Text style={styles.itemCardInfoTitle}>Change Password</Text>
-                </View>
+              <Image source={require('../../assets/icons/profile_next.png')} />
+            </View>
+          </Pressable>
+          <Pressable>
+            <View style={styles.itemCard}>
+              <View style={styles.itemCardInfo}>
                 <Image
-                  source={require('../../assets/icons/profile_next.png')}
+                  source={require('../../assets/icons/profile_change_password.png')}
                 />
+                <Text style={styles.itemCardInfoTitle}>Change Password</Text>
               </View>
-            </Pressable>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 30,
-            }}>
+              <Image source={require('../../assets/icons/profile_next.png')} />
+            </View>
+          </Pressable>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 30,
+          }}>
+          <TouchableOpacity onPress={onHandleLogout}>
             <View style={styles.buttonLogout}>
               <Image source={require('../../assets/icons/logout.png')} />
               <Text style={styles.buttonLogoutText}>Log out</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   listItem: {
-    rowGap: 20,
+    rowGap: 16,
   },
   itemCard: {
     flexDirection: 'row',

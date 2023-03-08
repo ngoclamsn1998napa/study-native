@@ -1,18 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
-  ScrollView,
-  SafeAreaView,
-  Image,
-} from 'react-native';
+import {Image} from 'react-native';
 import ProfileScreen from '../../pages/Profile';
 import {COLORS} from '../../util/colors';
 const Tab = createBottomTabNavigator();

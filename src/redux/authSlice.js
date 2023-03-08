@@ -18,14 +18,30 @@ export const signIn = createAsyncThunk(
   },
 );
 
+export const removeItemFromStorage = createAsyncThunk(
+  'storage/removeItem',
+  async (key, thunkAPI) => {
+    try {
+      await AsyncStorage.removeItem(key);
+      return key;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    isLoggedIn: !!AsyncStorage.getItem('access_token'),
+    isLoggedIn: false,
     user: null,
     isLoading: false,
   },
-  reducers: {},
+  reducers: {
+    setLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(signIn.pending, state => {
@@ -37,12 +53,20 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, {payload}) => {
         if (payload.data.access_token) {
           state.isLoggedIn = true;
-          AsyncStorage.setItem('access_token', payload.data.access_token);
+          AsyncStorage.setItem(
+            'access_token',
+            JSON.stringify(payload.data.access_token),
+          );
         }
         state.loading = false;
+      })
+      .addCase(removeItemFromStorage.fulfilled, (state, action) => {
+        state.isLoggedIn = false;
       });
   },
 });
+
+export const {setLoggedIn} = authSlice.actions;
 
 export const authSelector = state => state.auth;
 

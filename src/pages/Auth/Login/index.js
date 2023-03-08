@@ -32,13 +32,11 @@ const LoginScreen = ({navigation}) => {
       const actionResult = await dispatch(
         signIn({email: data.email, password: data.password}),
       );
-      console.log('sssss', actionResult);
 
       const response = unwrapResult(actionResult);
-      console.log('sssss', response);
 
       if (response.data.access_token) {
-        console.log('sssss', response);
+        navigation.navigate('MainLayout');
       }
     } catch (error) {}
   };

@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const baseURL = 'https://dev.fuku-sin.jp/api/';
-
 const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {
@@ -13,10 +12,9 @@ axiosClient.interceptors.request.use(async config => {
   const customHeaders = {
     Authorization: '',
   };
-
-  const token = AsyncStorage.getItem('access_token');
+  const token = await AsyncStorage.getItem('access_token');
   if (token) {
-    customHeaders.Authorization = `Bearer ${token}`;
+    customHeaders.Authorization = `Bearer ${JSON.parse(token)}`;
   }
 
   return {
