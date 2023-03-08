@@ -1,5 +1,5 @@
 import {unwrapResult} from '@reduxjs/toolkit';
-import React, {useState} from 'react';
+import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   View,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Button from '../../../components/Button';
+import ErrorMessage from '../../../components/ErrorMessage';
 import i18n from '../../../i18n';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {authSelector, signIn} from '../../../redux/authSlice';
@@ -42,6 +43,7 @@ const LoginScreen = ({navigation}) => {
       }
     } catch (error) {}
   };
+  console.log('sdsds', auth);
   return (
     <AuthLayout>
       <View style={styles.container}>
@@ -67,7 +69,7 @@ const LoginScreen = ({navigation}) => {
               )}
               name="email"
             />
-            {errors.email && <Text>{errors.email?.message}</Text>}
+            {errors.email && <ErrorMessage message={errors.email?.message} />}
           </View>
           <View>
             <Controller
@@ -76,7 +78,7 @@ const LoginScreen = ({navigation}) => {
                 required: 'Password is required',
                 pattern: {
                   value: REGEX.password,
-                  message: 'Minimum 8 characters',
+                  message: i18n.t('invalidPassword'),
                 },
               }}
               render={({field: {onChange, onBlur, value}}) => (
@@ -91,7 +93,9 @@ const LoginScreen = ({navigation}) => {
               )}
               name="password"
             />
-            {errors.password && <Text>{errors.password?.message}</Text>}
+            {errors.password && (
+              <ErrorMessage message={errors.password?.message} />
+            )}
           </View>
           <View style={styles.forgotPassword}>
             <Text style={styles.forgotPasswordText}>
@@ -108,7 +112,6 @@ const LoginScreen = ({navigation}) => {
             uppercase={true}
             title={i18n.t('login')}
           />
-          {auth.isLoading && <ActivityIndicator />}
         </TouchableOpacity>
         <View style={styles.existAccount}>
           <Text style={styles.existAccountTextLeft}>
@@ -121,6 +124,11 @@ const LoginScreen = ({navigation}) => {
           </Pressable>
         </View>
       </View>
+      {auth.isLoading && (
+        <View style={styles.loading}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      )}
     </AuthLayout>
   );
 };
@@ -130,6 +138,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     padding: 36,
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   col: {
     rowGap: 20,

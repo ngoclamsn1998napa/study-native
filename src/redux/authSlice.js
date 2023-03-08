@@ -45,10 +45,10 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(signIn.pending, state => {
-        state.loading = true;
+        state.isLoading = true;
       })
       .addCase(signIn.rejected, state => {
-        state.loading = false;
+        state.isLoading = false;
       })
       .addCase(signIn.fulfilled, (state, {payload}) => {
         if (payload.data.access_token) {
@@ -58,7 +58,7 @@ const authSlice = createSlice({
             JSON.stringify(payload.data.access_token),
           );
         }
-        state.loading = false;
+        state.isLoading = false;
       })
       .addCase(removeItemFromStorage.fulfilled, (state, action) => {
         state.isLoggedIn = false;
