@@ -9,16 +9,15 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Button from '../../../components/Button';
 import i18n from '../../../i18n';
 import AuthLayout from '../../../layouts/AuthLayout';
-import {authSelector, signIn} from '../../../redux/authSlice';
+import {signIn} from '../../../redux/authSlice';
 import {COLORS} from '../../../util/colors';
 import {REGEX} from '../../../util/regex';
 
 const LoginScreen = ({navigation}) => {
-  const auth = useSelector(authSelector);
   const dispatch = useDispatch();
   const {
     control,
