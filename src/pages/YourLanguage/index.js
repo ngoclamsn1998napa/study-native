@@ -8,8 +8,10 @@ import i18n from '../../i18n';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeLanguage} from '../../redux/languageSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {authSelector} from '../../redux/authSlice';
 
 const YourLanguageScreen = ({navigation}) => {
+  const {isLoggedIn} = useSelector(authSelector);
   useSelector(state => state.language.locale);
   const dispatch = useDispatch();
   const onHandleChangeLanguage = language => {
@@ -19,10 +21,10 @@ const YourLanguageScreen = ({navigation}) => {
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout isBgFooter={false}>
       <View style={styles.container}>
         <View style={styles.box}>
-          <View>
+          <View style={{flex: 1}}>
             <View style={styles.center}>
               <Text style={styles.h1}>{i18n.t('choose_your_lang')}</Text>
             </View>
@@ -41,7 +43,10 @@ const YourLanguageScreen = ({navigation}) => {
               />
             </View>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(isLoggedIn ? 'MainLayout' : 'Login')
+            }>
             <Button uppercase={true} title={i18n.t('get_started')} />
           </TouchableOpacity>
         </View>
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: COLORS.white,
+    // backgroundColor: COLORS.white,
   },
   center: {
     alignItems: 'center',

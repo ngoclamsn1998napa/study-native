@@ -8,16 +8,18 @@ import {
   TouchableOpacity,
   StyleSheet,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Button from '../../../components/Button';
 import i18n from '../../../i18n';
 import AuthLayout from '../../../layouts/AuthLayout';
-import {signIn} from '../../../redux/authSlice';
+import {authSelector, signIn} from '../../../redux/authSlice';
 import {COLORS} from '../../../util/colors';
 import {REGEX} from '../../../util/regex';
 
 const LoginScreen = ({navigation}) => {
+  const auth = useSelector(authSelector);
   const dispatch = useDispatch();
   const {
     control,
@@ -106,6 +108,7 @@ const LoginScreen = ({navigation}) => {
             uppercase={true}
             title={i18n.t('login')}
           />
+          {auth.isLoading && <ActivityIndicator />}
         </TouchableOpacity>
         <View style={styles.existAccount}>
           <Text style={styles.existAccountTextLeft}>

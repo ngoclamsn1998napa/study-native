@@ -3,18 +3,14 @@ import {
   View,
   StyleSheet,
   ImageBackground,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
   ScrollView,
   SafeAreaView,
 } from 'react-native';
 import {COLORS} from '../../util/colors';
 
-const AuthLayout = ({children}) => (
+const AuthLayout = ({isBgFooter = true, children}) => (
   <SafeAreaView style={styles.container}>
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={styles.inner}>
         <ImageBackground
           style={styles.headerBackground}
@@ -22,31 +18,15 @@ const AuthLayout = ({children}) => (
         />
         <View style={styles.divider}></View>
         {children}
-        <ImageBackground
-          style={styles.footerBackground}
-          source={require('../../assets/auth_footer.png')}
-        />
+        {isBgFooter && (
+          <ImageBackground
+            style={styles.footerBackground}
+            source={require('../../assets/auth_footer.png')}
+          />
+        )}
       </View>
     </ScrollView>
   </SafeAreaView>
-  // <KeyboardAvoidingView
-  //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-  //   style={styles.container}>
-  //   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-  //     <View style={styles.inner}>
-  //       <ImageBackground
-  //         style={styles.headerBackground}
-  //         source={require('../../assets/auth_logo.png')}
-  //       />
-  //       <View style={styles.divider}></View>
-  //       {children}
-  //       <ImageBackground
-  //         style={styles.footerBackground}
-  //         source={require('../../assets/auth_footer.png')}
-  //       />
-  //     </View>
-  //   </TouchableWithoutFeedback>
-  // </KeyboardAvoidingView>
 );
 
 const styles = StyleSheet.create({
@@ -74,9 +54,9 @@ const styles = StyleSheet.create({
     marginRight: 36,
   },
   inner: {
-    paddingBottom: 0,
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
   },
 });
 

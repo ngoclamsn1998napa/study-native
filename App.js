@@ -30,27 +30,34 @@ const App = () => {
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isLoggedIn ? 'MainLayout' : 'Login'}>
-        <Stack.Screen
-          name="MainLayout"
-          component={MainLayout}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="YourLanguage"
-          component={YourLanguageScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{headerShown: false}}
-        />
+      <Stack.Navigator initialRouteName={'YourLanguage'}>
+        {isLoggedIn ? (
+          <>
+            <Stack.Screen
+              name="MainLayout"
+              component={MainLayout}
+              options={{headerShown: false}}
+            />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="YourLanguage"
+              component={YourLanguageScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{headerShown: false}}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
