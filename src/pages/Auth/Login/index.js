@@ -1,5 +1,5 @@
 import {unwrapResult} from '@reduxjs/toolkit';
-import React from 'react';
+import React, {useRef} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   View,
@@ -20,6 +20,7 @@ import {COLORS} from '../../../util/colors';
 import {REGEX} from '../../../util/regex';
 
 const LoginScreen = ({navigation}) => {
+  const passwordRef = useRef();
   const auth = useSelector(authSelector);
   const dispatch = useDispatch();
   const {
@@ -43,7 +44,6 @@ const LoginScreen = ({navigation}) => {
       }
     } catch (error) {}
   };
-  console.log('sdsds', auth);
   return (
     <AuthLayout>
       <View style={styles.container}>
@@ -60,6 +60,10 @@ const LoginScreen = ({navigation}) => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
+                  returnKeyType="next"
+                  onSubmitEditing={() => {
+                    passwordRef.current.focus();
+                  }}
                   style={styles.input}
                   placeholder={i18n.t('email')}
                   onBlur={onBlur}
@@ -89,6 +93,7 @@ const LoginScreen = ({navigation}) => {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  ref={passwordRef}
                 />
               )}
               name="password"

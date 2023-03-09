@@ -53,6 +53,7 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, {payload}) => {
         if (payload.data.access_token) {
           state.isLoggedIn = true;
+          state.user = payload.data.user;
           AsyncStorage.setItem(
             'access_token',
             JSON.stringify(payload.data.access_token),

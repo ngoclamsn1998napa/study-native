@@ -6,31 +6,36 @@ import LoginScreen from './src/pages/Auth/Login';
 import YourLanguageScreen from './src/pages/YourLanguage';
 import RegisterScreen from './src/pages/Auth/Register';
 import {useDispatch, useSelector} from 'react-redux';
-import {authSelector, login, setLoggedIn} from './src/redux/authSlice';
+import {authSelector, setLoggedIn} from './src/redux/authSlice';
 import MainLayout from './src/layouts/MainLayout';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {StyleSheet, Text} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  Text.defaultProps = Text.defaultProps || {};
+  Text.defaultProps.style = styles.text;
   const {isLoggedIn} = useSelector(authSelector);
   const dispatch = useDispatch();
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      const token = await AsyncStorage.getItem('access_token');
-      dispatch(setLoggedIn(!!token)); // double negate the token value to convert it to a boolean
-    };
+  const checkLoggedIn = async () => {
+    const token = await AsyncStorage.getItem('access_token');
+    dispatch(setLoggedIn(!!token)); // double negate the token value to convert it to a boolean
+  };
 
-    checkLoggedIn();
+  useEffect(() => {
+    setTimeout(() => {
+      checkLoggedIn();
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'YourLanguage'}>
+      <Stack.Navigator>
         {isLoggedIn ? (
           <>
             <Stack.Screen
@@ -62,5 +67,11 @@ const App = () => {
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: 'UTM Avo', // Thay thế bằng tên font của bạn
+  },
+});
 
 export default App;

@@ -1,8 +1,16 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {TransitionPresets} from '@react-navigation/stack';
 import React from 'react';
-import {Image} from 'react-native';
 import ProfileScreen from '../../pages/Profile';
 import {COLORS} from '../../util/colors';
+import HomeIconSVG from '../../assets/icons/home.svg';
+import QAIconSVG from '../../assets/icons/qa.svg';
+import ChartIconSVG from '../../assets/icons/chart.svg';
+import UserIconSVG from '../../assets/icons/user.svg';
+import HomeScreen from '../../pages/Home';
+import QaScreen from '../../pages/Qa';
+import ChartScreen from '../../pages/Chart';
+import {Animated} from 'react-native';
 const Tab = createBottomTabNavigator();
 const MainLayout = () => (
   <Tab.Navigator
@@ -11,6 +19,22 @@ const MainLayout = () => (
       headerShown: false,
       tabBarShowLabel: true,
       tabBarHideOnKeyboard: true,
+      animationEnabled: true,
+      cardStyleInterpolator: ({current}) => ({
+        cardStyle: {
+          transform: [
+            {
+              translateX: Animated.multiply(
+                current.progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [100, 0],
+                }),
+                -1,
+              ),
+            },
+          ],
+        },
+      }),
       tabBarLabelStyle: {
         fontSize: 13,
         fontWeight: 400,
@@ -26,6 +50,7 @@ const MainLayout = () => (
         justifyContent: 'center',
       },
       tabBarActiveTintColor: COLORS.primary,
+      tabBarInactiveTintColor: COLORS.silver,
       tabBarStyle: {
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -55,26 +80,26 @@ const MainLayout = () => (
         let iconName;
         switch (route.name) {
           case 'Home':
-            iconName = require('../../assets/icons/home.png');
+            iconName = <HomeIconSVG style={{color: color}} />;
             break;
           case 'Q&A':
-            iconName = require('../../assets/icons/qa.png');
+            iconName = <QAIconSVG style={{color: color}} />;
             break;
           case 'Analytics':
-            iconName = require('../../assets/icons/chart.png');
+            iconName = <ChartIconSVG style={{color: color}} />;
             break;
           case 'Profile':
-            iconName = require('../../assets/icons/user.png');
+            iconName = <UserIconSVG style={{color: color}} />;
             break;
           default:
             break;
         }
-        return <Image source={iconName} />;
+        return iconName;
       },
     })}>
-    <Tab.Screen name="Home" component={ProfileScreen} />
-    <Tab.Screen name="Q&A" component={ProfileScreen} />
-    <Tab.Screen name="Analytics" component={ProfileScreen} />
+    <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Screen name="Q&A" component={QaScreen} />
+    <Tab.Screen name="Analytics" component={ChartScreen} />
     <Tab.Screen name="Profile" component={ProfileScreen} />
   </Tab.Navigator>
 );
