@@ -85,7 +85,13 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(signUp.fulfilled, (state, {payload}) => {
-        console.log('payload', payload);
+        if (payload.data.access_token) {
+          state.isLoggedIn = true;
+          AsyncStorage.setItem(
+            'access_token',
+            JSON.stringify(payload.data.access_token),
+          );
+        }
         state.isLoading = false;
       })
       .addCase(removeItemFromStorage.fulfilled, (state, action) => {
