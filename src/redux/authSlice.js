@@ -34,6 +34,22 @@ export const signUp = createAsyncThunk(
   },
 );
 
+export const getMe = createAsyncThunk(
+  'auth/fetchGetMe',
+  async (body, {rejectWithValue}) => {
+    try {
+      const response = await AuthService.getMe(body);
+      return response;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const removeItemFromStorage = createAsyncThunk(
   'storage/removeItem',
   async (key, thunkAPI) => {
@@ -74,6 +90,12 @@ const authSlice = createSlice({
             'access_token',
             JSON.stringify(payload.data.access_token),
           );
+        }
+        state.isLoading = false;
+      })
+      .addCase(getMe.fulfilled, (state, {payload}) => {
+        if (payload.data) {
+          state.user = payload.data;
         }
         state.isLoading = false;
       })

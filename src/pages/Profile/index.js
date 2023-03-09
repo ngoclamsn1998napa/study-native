@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,11 +12,10 @@ import {
 import {COLORS} from '../../util/colors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {authSelector, setLoggedIn} from '../../redux/authSlice';
+import {authSelector, getMe, setLoggedIn} from '../../redux/authSlice';
 
 const ProfileScreen = () => {
   const {user} = useSelector(authSelector);
-  console.log('aaa', user);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const onHandleLogout = async () => {
@@ -24,6 +23,12 @@ const ProfileScreen = () => {
     dispatch(setLoggedIn(!!token));
     navigation.navigate('Login');
   };
+
+  useEffect(() => {
+    dispatch(getMe());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
