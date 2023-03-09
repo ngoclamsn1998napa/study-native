@@ -18,6 +18,22 @@ export const signIn = createAsyncThunk(
   },
 );
 
+export const signUp = createAsyncThunk(
+  'auth/fetchsignUp',
+  async (body, {rejectWithValue}) => {
+    try {
+      const response = await AuthService.register(body);
+      return response;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const removeItemFromStorage = createAsyncThunk(
   'storage/removeItem',
   async (key, thunkAPI) => {
@@ -59,6 +75,17 @@ const authSlice = createSlice({
             JSON.stringify(payload.data.access_token),
           );
         }
+        state.isLoading = false;
+      })
+      .addCase(signUp.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(signUp.rejected, (state, {payload}) => {
+        console.log('error', payload);
+        state.isLoading = false;
+      })
+      .addCase(signUp.fulfilled, (state, {payload}) => {
+        console.log('payload', payload);
         state.isLoading = false;
       })
       .addCase(removeItemFromStorage.fulfilled, (state, action) => {

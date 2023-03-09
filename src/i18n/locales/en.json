@@ -16,5 +16,12 @@
   "confirm_password": "Confirm Password",
   "already_have_account": "Already have account?",
   "sign_in": "Sign In",
-  "invalidPassword": "The password must include uppercase and lowercase letters, a combination of letters and numbers, contain at least one special character, and have a minimum length of 8 characters."
+  "invalidPassword": "The password must include uppercase and lowercase letters, a combination of letters and numbers, contain at least one special character, and have a minimum length of 8 characters.",
+  "emailRequired": "Email is required",
+  "invalidEmail": "Please enter a valid email",
+  "passwordRequired": "Password is required",
+  "passwordDoMatch": "The passwords do not match",
+  "nameRequired": "Name is required",
+  "domainCodeRequired": "Domain code is required",
+  "domainCode": "Domain code"
 }

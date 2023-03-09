@@ -8,14 +8,23 @@ import {
   TouchableOpacity,
   StyleSheet,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
+import ErrorMessage from '../../../components/ErrorMessage';
 import Button from '../../../components/Button';
 import i18n from '../../../i18n';
 import AuthLayout from '../../../layouts/AuthLayout';
 import {COLORS} from '../../../util/colors';
 import {REGEX} from '../../../util/regex';
+import {useDispatch, useSelector} from 'react-redux';
+import {authSelector, signUp} from '../../../redux/authSlice';
+import {unwrapResult} from '@reduxjs/toolkit';
 
 const RegisterScreen = ({navigation}) => {
+  const {isLoading} = useSelector(authSelector);
+
+  const dispatch = useDispatch();
+
   const {
     control,
     handleSubmit,
@@ -26,8 +35,24 @@ const RegisterScreen = ({navigation}) => {
   });
   const password = useRef({});
   password.current = watch('password', '');
-  const onSubmit = data => {
-    console.log(data);
+  const onSubmit = async data => {
+    const body = {
+      email: data.email,
+      password: data.password,
+      domain_code: data.domain_code,
+    };
+    console.log(body);
+    try {
+      const actionResult = await dispatch(signUp(body));
+
+      const response = unwrapResult(actionResult);
+
+      if (response.data.access_token) {
+        navigation.navigate('MainLayout');
+      }
+    } catch (error) {
+      console.log('aaa', error);
+    }
   };
 
   return (
@@ -38,29 +63,10 @@ const RegisterScreen = ({navigation}) => {
             <Controller
               control={control}
               rules={{
-                required: 'Name is required',
-              }}
-              render={({field: {onChange, onBlur, value}}) => (
-                <TextInput
-                  style={styles.input}
-                  placeholder={i18n.t('name')}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="name"
-            />
-            {errors.name && <Text>{errors.name?.message}</Text>}
-          </View>
-          <View>
-            <Controller
-              control={control}
-              rules={{
-                required: 'Email is required',
+                required: i18n.t('emailRequired'),
                 pattern: {
                   value: REGEX.email,
-                  message: 'Please enter a valid email',
+                  message: i18n.t('invalidEmail'),
                 },
               }}
               render={({field: {onChange, onBlur, value}}) => (
@@ -74,9 +80,30 @@ const RegisterScreen = ({navigation}) => {
               )}
               name="email"
             />
-            {errors.email && <Text>{errors.email?.message}</Text>}
+            {errors.email && <ErrorMessage message={errors.email?.message} />}
           </View>
           <View>
+            <Controller
+              control={control}
+              rules={{
+                required: i18n.t('domainCodeRequired'),
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <TextInput
+                  style={styles.input}
+                  placeholder={i18n.t('domainCode')}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="domain_code"
+            />
+            {errors.domain_code && (
+              <ErrorMessage message={errors.domain_code?.message} />
+            )}
+          </View>
+          {/* <View>
             <Controller
               control={control}
               render={({field: {onChange, value}}) => (
@@ -91,15 +118,15 @@ const RegisterScreen = ({navigation}) => {
               )}
               name="gender"
             />
-          </View>
+          </View> */}
           <View>
             <Controller
               control={control}
               rules={{
-                required: 'Password is required',
+                required: i18n.t('passwordRequired'),
                 pattern: {
                   value: REGEX.password,
-                  message: 'Minimum 8 characters',
+                  message: i18n.t('invalidPassword'),
                 },
               }}
               render={({field: {onChange, onBlur, value}}) => (
@@ -114,19 +141,21 @@ const RegisterScreen = ({navigation}) => {
               )}
               name="password"
             />
-            {errors.password && <Text>{errors.password?.message}</Text>}
+            {errors.password && (
+              <ErrorMessage message={errors.password?.message} />
+            )}
           </View>
           <View>
             <Controller
               control={control}
               rules={{
-                required: 'Password is required',
+                required: i18n.t('passwordRequired'),
                 pattern: {
                   value: REGEX.password,
-                  message: 'Minimum 8 characters',
+                  message: i18n.t('invalidPassword'),
                 },
                 validate: value =>
-                  value === password.current || 'The passwords do not match',
+                  value === password.current || i18n.t('passwordDoMatch'),
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
@@ -141,7 +170,7 @@ const RegisterScreen = ({navigation}) => {
               name="confirmPassword"
             />
             {errors.confirmPassword && (
-              <Text>{errors.confirmPassword?.message}</Text>
+              <ErrorMessage message={errors.confirmPassword?.message} />
             )}
           </View>
           <TouchableOpacity
@@ -167,6 +196,11 @@ const RegisterScreen = ({navigation}) => {
           </Pressable>
         </View>
       </View>
+      {isLoading && (
+        <View style={styles.loading}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      )}
     </AuthLayout>
   );
 };
@@ -176,6 +210,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     padding: 36,
+  },
+  loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   col: {
     rowGap: 20,

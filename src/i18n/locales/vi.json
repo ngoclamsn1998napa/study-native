@@ -16,5 +16,11 @@
   "confirm_password": "Xác nhận mật khẩu",
   "already_have_account": "Bạn đã có tài khoản?",
   "sign_in": "Đăng nhập",
-  "invalidPassword": "Mật khẩu phải bao gồm chữ hoa và chữ thường, kết hợp chữ và số, chứa ít nhất một ký tự đặc biệt, và có độ dài tối thiểu là 8 ký tự."
+  "invalidPassword": "Mật khẩu phải bao gồm chữ hoa và chữ thường, kết hợp chữ và số, chứa ít nhất một ký tự đặc biệt, và có độ dài tối thiểu là 8 ký tự.",
+  "emailRequired": "Email là bắt buộc",
+  "invalidEmail": "Vui lòng nhập email hợp lệ",
+  "passwordRequired": "Mật khẩu là bắt buộc",
+  "passwordDoMatch": "Mật khẩu không trùng khớp",
+  "domainCodeRequired": "Mã tên miền là bắt buộc",
+  "domainCode": "Mã tên miền"
 }

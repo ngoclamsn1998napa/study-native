@@ -16,6 +16,7 @@ import {authSelector, setLoggedIn} from '../../redux/authSlice';
 
 const ProfileScreen = () => {
   const {user} = useSelector(authSelector);
+  console.log('aaa', user);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const onHandleLogout = async () => {
@@ -38,9 +39,9 @@ const ProfileScreen = () => {
           </View>
           <View>
             <Text style={styles.profileInfoName}>
-              {user.full_name || 'No name'}
+              {user?.full_name || 'No name'}
             </Text>
-            <Text>{user.email}</Text>
+            <Text>{user?.email}</Text>
           </View>
         </View>
       </View>
@@ -164,10 +165,11 @@ const styles = StyleSheet.create({
       width: 0,
       height: 8,
     },
-    backgroundColor: COLORS.white,
     shadowRadius: 20,
-    shadowColor: 'rgba(138, 149, 158, 0.2)',
+    shadowColor: '#8a959e',
     shadowOpacity: 1,
+    elevation: 3,
+    backgroundColor: COLORS.white,
   },
   itemCardInfo: {
     flexDirection: 'row',

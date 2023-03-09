@@ -52,10 +52,10 @@ const LoginScreen = ({navigation}) => {
             <Controller
               control={control}
               rules={{
-                required: 'Email is required',
+                required: i18n.t('emailRequired'),
                 pattern: {
                   value: REGEX.email,
-                  message: 'Please enter a valid email',
+                  message: i18n.t('invalidEmail'),
                 },
               }}
               render={({field: {onChange, onBlur, value}}) => (
@@ -79,7 +79,7 @@ const LoginScreen = ({navigation}) => {
             <Controller
               control={control}
               rules={{
-                required: 'Password is required',
+                required: i18n.t('passwordRequired'),
                 pattern: {
                   value: REGEX.password,
                   message: i18n.t('invalidPassword'),
