@@ -11,10 +11,11 @@ import {
 } from 'react-native';
 import {COLORS} from '../../util/colors';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {setLoggedIn} from '../../redux/authSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {authSelector, setLoggedIn} from '../../redux/authSlice';
 
 const ProfileScreen = () => {
+  const {user} = useSelector(authSelector);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const onHandleLogout = async () => {
@@ -36,8 +37,10 @@ const ProfileScreen = () => {
             <Image source={require('../../assets/avatar.png')} />
           </View>
           <View>
-            <Text style={styles.profileInfoName}>Thanh Pham</Text>
-            <Text>thanhpham@gmail.com</Text>
+            <Text style={styles.profileInfoName}>
+              {user.full_name || 'No name'}
+            </Text>
+            <Text>{user.email}</Text>
           </View>
         </View>
       </View>
