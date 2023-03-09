@@ -34,6 +34,10 @@ const RegisterScreen = ({navigation}) => {
     mode: 'onChange',
   });
   const password = useRef({});
+  const domainCodeRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
+
   password.current = watch('password', '');
   const onSubmit = async data => {
     const body = {
@@ -71,6 +75,10 @@ const RegisterScreen = ({navigation}) => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
+                  returnKeyType="next"
+                  onSubmitEditing={() => {
+                    domainCodeRef.current.focus();
+                  }}
                   style={styles.input}
                   placeholder={i18n.t('email')}
                   onBlur={onBlur}
@@ -90,11 +98,16 @@ const RegisterScreen = ({navigation}) => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
+                  returnKeyType="next"
+                  onSubmitEditing={() => {
+                    passwordRef.current.focus();
+                  }}
                   style={styles.input}
                   placeholder={i18n.t('domainCode')}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  ref={domainCodeRef}
                 />
               )}
               name="domain_code"
@@ -131,12 +144,17 @@ const RegisterScreen = ({navigation}) => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
+                  returnKeyType="next"
+                  onSubmitEditing={() => {
+                    confirmPasswordRef.current.focus();
+                  }}
                   secureTextEntry={true}
                   style={styles.input}
                   placeholder={i18n.t('password')}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  ref={passwordRef}
                 />
               )}
               name="password"
@@ -159,12 +177,14 @@ const RegisterScreen = ({navigation}) => {
               }}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
+                  returnKeyType="done"
                   secureTextEntry={true}
                   style={styles.input}
                   placeholder={i18n.t('confirm_password')}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  ref={confirmPasswordRef}
                 />
               )}
               name="confirmPassword"
