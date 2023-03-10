@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   TouchableOpacity,
+  useColorScheme,
 } from 'react-native';
 import {COLORS} from '../../util/colors';
 import {useNavigation} from '@react-navigation/native';
@@ -15,6 +16,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {authSelector, getMe, setLoggedIn} from '../../redux/authSlice';
 
 const ProfileScreen = () => {
+  const theme = useColorScheme();
+  const styles = styling(theme);
   const {user} = useSelector(authSelector);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -115,91 +118,92 @@ const ProfileScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.gray,
-  },
-  header: {
-    backgroundColor: COLORS.primary3,
-    padding: 24,
-  },
-  profile: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  profileText: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 700,
-    color: COLORS.blueBlack,
-  },
-  profileInfo: {
-    flexDirection: 'row',
-    columnGap: 20,
-    alignItems: 'center',
-    color: COLORS.blueBlack,
-    marginTop: 24,
-  },
-  profileInfoName: {
-    fontSize: 18,
-    fontWeight: 700,
-  },
-  profileInfoAvatar: {
-    padding: 2,
-    borderRadius: 100,
-    borderWidth: 1,
-    borderColor: COLORS.blueBlack,
-  },
-  content: {
-    flex: 1,
-    padding: 24,
-  },
-  listItem: {
-    rowGap: 16,
-  },
-  itemCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderRadius: 12,
-    shadowOffset: {
-      width: 0,
-      height: 8,
+const styling = theme =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: COLORS[theme].gray,
     },
-    shadowRadius: 20,
-    shadowColor: '#8a959e',
-    shadowOpacity: 1,
-    elevation: 3,
-    backgroundColor: COLORS.white,
-  },
-  itemCardInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    columnGap: 16,
-  },
-  itemCardInfoTitle: {
-    fontSize: 16,
-    color: COLORS.blueBlack,
-  },
-  buttonLogout: {
-    flexDirection: 'row',
-    borderRadius: 30,
-    backgroundColor: '#A90F0F',
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-    columnGap: 14,
-    width: 160,
-  },
-  buttonLogoutText: {
-    color: COLORS.white,
-    fontSize: 17,
-    fontWeight: 400,
-  },
-});
+    header: {
+      backgroundColor: COLORS[theme].primary3,
+      padding: 24,
+    },
+    profile: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    profileText: {
+      flex: 1,
+      textAlign: 'center',
+      fontSize: 18,
+      fontWeight: 700,
+      color: COLORS[theme].blueBlack,
+    },
+    profileInfo: {
+      flexDirection: 'row',
+      columnGap: 20,
+      alignItems: 'center',
+      color: COLORS[theme].blueBlack,
+      marginTop: 24,
+    },
+    profileInfoName: {
+      fontSize: 18,
+      fontWeight: 700,
+    },
+    profileInfoAvatar: {
+      padding: 2,
+      borderRadius: 100,
+      borderWidth: 1,
+      borderColor: COLORS[theme].blueBlack,
+    },
+    content: {
+      flex: 1,
+      padding: 24,
+    },
+    listItem: {
+      rowGap: 16,
+    },
+    itemCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 24,
+      paddingVertical: 16,
+      borderRadius: 12,
+      shadowOffset: {
+        width: 0,
+        height: 8,
+      },
+      shadowRadius: 20,
+      shadowColor: '#8a959e',
+      shadowOpacity: 1,
+      elevation: 3,
+      backgroundColor: COLORS[theme].white,
+    },
+    itemCardInfo: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      columnGap: 16,
+    },
+    itemCardInfoTitle: {
+      fontSize: 16,
+      color: COLORS[theme].blueBlack,
+    },
+    buttonLogout: {
+      flexDirection: 'row',
+      borderRadius: 30,
+      backgroundColor: '#A90F0F',
+      height: 48,
+      justifyContent: 'center',
+      alignItems: 'center',
+      columnGap: 14,
+      width: 160,
+    },
+    buttonLogoutText: {
+      color: COLORS[theme].white,
+      fontSize: 17,
+      fontWeight: 400,
+    },
+  });
 
 export default ProfileScreen;
