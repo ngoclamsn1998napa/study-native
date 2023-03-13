@@ -16,7 +16,7 @@ const MainLayout = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={'Profile'}
+      initialRouteName={'Analytics'}
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarShowLabel: true,
