@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Pressable,
   ActivityIndicator,
+  useColorScheme,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Button from '../../../components/Button';
@@ -20,6 +21,8 @@ import {COLORS} from '../../../util/colors';
 import {REGEX} from '../../../util/regex';
 
 const LoginScreen = ({navigation}) => {
+  const theme = useColorScheme();
+  const styles = styling(theme);
   const passwordRef = useRef();
   const auth = useSelector(authSelector);
   const dispatch = useDispatch();
@@ -138,58 +141,59 @@ const LoginScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'stretch',
-    padding: 36,
-  },
-  loading: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  col: {
-    rowGap: 20,
-  },
-  forgotPassword: {
-    alignItems: 'center',
-  },
-  forgotPasswordText: {
-    color: COLORS.orange2,
-    fontWeight: 700,
-    fontSize: 17,
-    marginBottom: 20,
-  },
-  existAccount: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    columnGap: 8,
-  },
-  existAccountTextLeft: {
-    fontSize: 17,
-    color: COLORS.blueBlack,
-    marginBottom: 4,
-  },
-  existAccountTextRight: {
-    color: COLORS.blueBlack,
-    fontWeight: 700,
-    fontSize: 24,
-  },
-  input: {
-    paddingTop: 16,
-    paddingRight: 20,
-    paddingBottom: 16,
-    paddingLeft: 20,
-    borderRadius: 12,
-    height: 50,
-    backgroundColor: '#F0F4F9',
-  },
-});
+const styling = theme =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'stretch',
+      padding: 36,
+    },
+    loading: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    col: {
+      rowGap: 20,
+    },
+    forgotPassword: {
+      alignItems: 'center',
+    },
+    forgotPasswordText: {
+      color: COLORS.orange2,
+      fontWeight: 700,
+      fontSize: 17,
+      marginBottom: 20,
+    },
+    existAccount: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      columnGap: 8,
+    },
+    existAccountTextLeft: {
+      fontSize: 17,
+      color: COLORS[theme].blueBlack,
+      marginBottom: 4,
+    },
+    existAccountTextRight: {
+      color: COLORS[theme].blueBlack,
+      fontWeight: 700,
+      fontSize: 24,
+    },
+    input: {
+      paddingTop: 16,
+      paddingRight: 20,
+      paddingBottom: 16,
+      paddingLeft: 20,
+      borderRadius: 12,
+      height: 50,
+      backgroundColor: COLORS[theme].bgInput,
+    },
+  });
 
 export default LoginScreen;

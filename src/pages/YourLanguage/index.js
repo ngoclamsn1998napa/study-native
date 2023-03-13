@@ -9,8 +9,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeLanguage} from '../../redux/languageSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {authSelector} from '../../redux/authSlice';
+import {useColorScheme} from 'react-native';
 
 const YourLanguageScreen = ({navigation}) => {
+  const theme = useColorScheme();
+
+  const styles = styling(theme);
+
   const {isLoggedIn} = useSelector(authSelector);
   useSelector(state => state.language.locale);
   const dispatch = useDispatch();
@@ -55,24 +60,25 @@ const YourLanguageScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  center: {
-    alignItems: 'center',
-  },
-  box: {flex: 1, justifyContent: 'space-between', width: '100%'},
-  row: {rowGap: 20, width: '100%'},
-  h1: {
-    fontSize: 24,
-    fontWeight: 700,
-    marginBottom: 30,
-    color: COLORS.primary,
-  },
-});
+const styling = theme =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
+    center: {
+      alignItems: 'center',
+    },
+    box: {flex: 1, justifyContent: 'space-between', width: '100%'},
+    row: {rowGap: 20, width: '100%'},
+    h1: {
+      fontSize: 24,
+      fontWeight: 700,
+      marginBottom: 30,
+      color: COLORS[theme]?.primary,
+    },
+  });
 
 export default YourLanguageScreen;

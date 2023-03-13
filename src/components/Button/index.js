@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, useColorScheme} from 'react-native';
 import {COLORS} from '../../util/colors';
 
 const Button = ({title, uppercase, disabled}) => {
+  const theme = useColorScheme();
+  const styles = styling(theme);
   return (
     <View
       style={[
@@ -15,25 +17,26 @@ const Button = ({title, uppercase, disabled}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 54,
-    borderRadius: 40,
-    backgroundColor: COLORS.primary,
-  },
-  uppercase: {
-    textTransform: 'uppercase',
-  },
-  disabled: {
-    backgroundColor: COLORS.lightGreen,
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: 700,
-    color: COLORS.white,
-  },
-});
+const styling = theme =>
+  StyleSheet.create({
+    container: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 54,
+      borderRadius: 40,
+      backgroundColor: COLORS[theme]?.primary,
+    },
+    uppercase: {
+      textTransform: 'uppercase',
+    },
+    disabled: {
+      backgroundColor: COLORS[theme].lightGreen,
+    },
+    name: {
+      fontSize: 20,
+      fontWeight: 700,
+      color: COLORS[theme].white,
+    },
+  });
 
 export default Button;
