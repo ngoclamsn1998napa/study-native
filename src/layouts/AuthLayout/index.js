@@ -1,21 +1,56 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
   ImageBackground,
   ScrollView,
-  SafeAreaView,
+  Keyboard,
   useColorScheme,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {COLORS} from '../../util/colors';
 
 const AuthLayout = ({isBgFooter = true, children}) => {
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const theme = useColorScheme();
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    scrollRef.current.scrollToEnd({animated: true});
+  }, []);
 
   const styles = styling(theme);
+
+  useEffect(() => {
+    const keyboardWillShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      event => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({y: 272, animated: true});
+        }
+      },
+    );
+
+    const keyboardWillHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardHeight(0);
+      },
+    );
+
+    return () => {
+      keyboardWillShowListener.remove();
+      keyboardWillHideListener.remove();
+    };
+  }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={keyboardHeight}
+      style={styles.container}>
+      <ScrollView ref={scrollRef} contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.inner}>
           <ImageBackground
             style={styles.headerBackground}
@@ -31,7 +66,7 @@ const AuthLayout = ({isBgFooter = true, children}) => {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
