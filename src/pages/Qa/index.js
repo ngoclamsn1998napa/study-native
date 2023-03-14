@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import BarChart from '../../components/BarChart';
+import CircularProgress from '../../components/CircularProgress';
 import {COLORS} from '../../util/colors';
 
 const QaScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Q&A Screen</Text>
-      <Text style={styles.text}>Coming Soon</Text>
+      <CircularProgress size={270} strokeWidth={30} progressPercent={0} />
     </View>
   );
 };
@@ -14,7 +15,7 @@ const QaScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.gray,
+    backgroundColor: COLORS.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
