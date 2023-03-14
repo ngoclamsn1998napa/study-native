@@ -9,7 +9,7 @@ const CircularProgress = props => {
   const circum = radius * 2 * Math.PI;
   const svgProgress = 100 - props.progressPercent;
 
-  const styles = styling(strokeWidth * 2);
+  const styles = styling(size);
 
   return (
     <View style={styles.container}>
@@ -55,17 +55,15 @@ const CircularProgress = props => {
 const styling = size =>
   StyleSheet.create({
     container: {
-      // flex: 1,
-      // backgroundColor: COLORS.white,
+      backgroundColor: COLORS.white,
       justifyContent: 'center',
       alignItems: 'center',
+      paddingVertical: 40,
     },
     detail: {
       position: 'absolute',
-      top: size,
-      bottom: size,
-      left: size,
-      right: size,
+      width: size - 110,
+      height: size - 110,
       justifyContent: 'center',
       alignItems: 'center',
       fontSize: 24,

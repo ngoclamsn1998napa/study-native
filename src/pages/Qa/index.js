@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import BarChart from '../../components/BarChart';
 import CircularProgress from '../../components/CircularProgress';
 import {COLORS} from '../../util/colors';
 

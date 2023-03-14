@@ -7,7 +7,8 @@ import NoDataSVG from '../../assets/icons/no_data_chart.svg';
 import PrevSVG from '../../assets/icons/ic_chart_prev.svg';
 import NextSVG from '../../assets/icons/ic_chart_next.svg';
 
-const LineChart = () => {
+const HistoryChart = ({dataChart = []}) => {
+  const isEmpty = !dataChart.length;
   const data = {
     labels: [
       'Jan',
@@ -25,11 +26,9 @@ const LineChart = () => {
     ],
     datasets: [
       {
-        data: [[]],
-        // data: [48, 152, 147, 230, 180, 300, 77, 270, 188, 260, 233, 145],
+        data: !isEmpty ? dataChart : [[]],
         strokeWidth: 2,
-        color: () => 'transparent',
-        // color: () => '#103F37',
+        color: () => (isEmpty ? 'transparent' : '#103F37'),
       },
     ],
   };
@@ -71,7 +70,7 @@ const LineChart = () => {
       <View>
         <LineChart
           data={data}
-          width={Dimensions.get('window').width}
+          width={Dimensions.get('window').width - 20}
           height={355}
           bezier={false}
           withVerticalLines={false}
@@ -82,13 +81,18 @@ const LineChart = () => {
           fromZero={true}
           fromNumber={300}
         />
-        {/* <Pressable style={styles.refresh}>
-          <ChartClockSVG />
-        </Pressable> */}
-        <View style={styles.noData}>
-          <NoDataSVG />
-          <Text style={styles.noDataText}>No data</Text>
-        </View>
+
+        {isEmpty ? (
+          <View style={styles.noData}>
+            <NoDataSVG />
+            <Text style={styles.noDataText}>No data</Text>
+          </View>
+        ) : (
+          <Pressable style={styles.refresh}>
+            <ChartClockSVG />
+          </Pressable>
+        )}
+
         <View style={styles.year}>
           <PrevSVG />
           <Text style={styles.yearText}>2020</Text>
@@ -101,7 +105,6 @@ const LineChart = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: COLORS.white,
     paddingBottom: 20,
     borderRadius: 8,
@@ -148,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LineChart;
+export default HistoryChart;
