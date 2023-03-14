@@ -6,6 +6,7 @@ import {COLORS} from '../../util/colors';
 
 const ChartScreen = () => {
   const [currentTab, setCurrentTab] = useState(1);
+  const [currentPicker, setCurrentPicker] = useState(1);
   const dataChart = [48, 152, 147, 230, 180, 300, 77, 270, 188, 260, 233, 145];
   return (
     <View style={styles.container}>
@@ -38,45 +39,51 @@ const ChartScreen = () => {
           <View style={styles.historyChart}>
             <Text style={styles.h1}>Learned Card History</Text>
             <View style={styles.tabsPicker}>
-              <View
-                style={[
-                  styles.tabPicker,
-                  currentTab === 1 && styles.tabPickerActive,
-                ]}>
-                <Text
+              <Pressable style={{flex: 1}} onPress={() => setCurrentPicker(1)}>
+                <View
                   style={[
-                    styles.tabPickerText,
-                    currentTab === 1 && styles.tabPickerTextActive,
+                    styles.tabPicker,
+                    currentPicker === 1 && styles.tabPickerActive,
                   ]}>
-                  Week
-                </Text>
-              </View>
-              <View
-                style={[
-                  styles.tabPicker,
-                  currentTab === 2 && styles.tabPickerActive,
-                ]}>
-                <Text
+                  <Text
+                    style={[
+                      styles.tabPickerText,
+                      currentPicker === 1 && styles.tabPickerTextActive,
+                    ]}>
+                    Week
+                  </Text>
+                </View>
+              </Pressable>
+              <Pressable style={{flex: 1}} onPress={() => setCurrentPicker(2)}>
+                <View
                   style={[
-                    styles.tabPickerText,
-                    currentTab === 2 && styles.tabPickerTextActive,
+                    styles.tabPicker,
+                    currentPicker === 2 && styles.tabPickerActive,
                   ]}>
-                  Month
-                </Text>
-              </View>
-              <View
-                style={[
-                  styles.tabPicker,
-                  currentTab === 2 && styles.tabPickerActive,
-                ]}>
-                <Text
+                  <Text
+                    style={[
+                      styles.tabPickerText,
+                      currentPicker === 2 && styles.tabPickerTextActive,
+                    ]}>
+                    Month
+                  </Text>
+                </View>
+              </Pressable>
+              <Pressable style={{flex: 1}} onPress={() => setCurrentPicker(3)}>
+                <View
                   style={[
-                    styles.tabPickerText,
-                    currentTab === 2 && styles.tabPickerTextActive,
+                    styles.tabPicker,
+                    currentPicker === 3 && styles.tabPickerActive,
                   ]}>
-                  Year
-                </Text>
-              </View>
+                  <Text
+                    style={[
+                      styles.tabPickerText,
+                      currentPicker === 3 && styles.tabPickerTextActive,
+                    ]}>
+                    Year
+                  </Text>
+                </View>
+              </Pressable>
             </View>
             <HistoryChart dataChart={dataChart} />
           </View>
