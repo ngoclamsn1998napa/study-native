@@ -50,10 +50,23 @@ const ChartScreen = () => {
     color: (opacity = 1) => `#1C1F24`,
     labelColor: (opacity = 1) => `#D3D3D2`,
     propsForLabels: {
+      fontSize: 12,
+      fontWeight: 700,
+      fill: 'red',
+    },
+    propsForHorizontalLabels: {
+      fontSize: 12,
+      fontWeight: 'bold',
+      fill: '#103F37',
+    },
+    propsForVerticalLabels: {
       fontSize: 10,
       fill: '#8F9DA9',
-      fontWeight: 500,
+      fontWeight: 400,
     },
+    barPercentage: 0.5,
+    yAxisInterval: 50,
+    yAxisSuffix: '',
     useShadowColorFromDataset: false,
   };
   return (
@@ -61,14 +74,14 @@ const ChartScreen = () => {
       <Text>Bezier Line Chart</Text>
       <LineChart
         data={data}
-        width={Dimensions.get('window').width} // from react-native
+        width={Dimensions.get('window').width}
         height={355}
         bezier={false}
         withVerticalLines={false}
         chartConfig={chartConfiguration}
-        segments={7}
         xLabelsOffset={10}
         yLabelsOffset={20}
+        fromZero={true}
       />
     </View>
   );
