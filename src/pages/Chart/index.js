@@ -5,7 +5,6 @@ import {LineChart} from 'react-native-chart-kit';
 import {LinearGradient} from 'react-native-linear-gradient';
 
 const ChartScreen = () => {
-  const gradientColors = ['#32C07A', '#103F37', '#103F37'];
   const data = {
     labels: [
       'Jan',
@@ -48,12 +47,6 @@ const ChartScreen = () => {
       stroke: '#FFFFFF',
     },
     color: (opacity = 1) => `#1C1F24`,
-    labelColor: (opacity = 1) => `#D3D3D2`,
-    propsForLabels: {
-      fontSize: 12,
-      fontWeight: 700,
-      fill: 'red',
-    },
     propsForHorizontalLabels: {
       fontSize: 12,
       fontWeight: 'bold',
@@ -64,7 +57,6 @@ const ChartScreen = () => {
       fill: '#8F9DA9',
       fontWeight: 400,
     },
-    barPercentage: 0.5,
     yAxisInterval: 50,
     yAxisSuffix: '',
     useShadowColorFromDataset: false,
@@ -81,6 +73,7 @@ const ChartScreen = () => {
         chartConfig={chartConfiguration}
         xLabelsOffset={10}
         yLabelsOffset={20}
+        segments={6}
         fromZero={true}
       />
     </View>
