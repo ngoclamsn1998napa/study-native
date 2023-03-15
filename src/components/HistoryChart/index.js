@@ -8,23 +8,16 @@ import PrevSVG from '../../assets/icons/ic_chart_prev.svg';
 import NextSVG from '../../assets/icons/ic_chart_next.svg';
 import moment from 'moment';
 
-const HistoryChart = ({dataChart = [], currentYear, onChangeYear}) => {
+const HistoryChart = ({
+  dataChart = [],
+  label = [],
+  labelType = null,
+  currentPicker,
+  onChangeYear,
+}) => {
   const isEmpty = !dataChart.length;
   const data = {
-    labels: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'June',
-      'July',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
+    labels: label,
     datasets: [
       {
         data: !isEmpty ? dataChart : [[]],
@@ -81,6 +74,7 @@ const HistoryChart = ({dataChart = [], currentYear, onChangeYear}) => {
           segments={6}
           fromZero={true}
           fromNumber={300}
+          withDots={currentPicker === 2 ? false : true}
         />
 
         {isEmpty ? (
@@ -98,9 +92,7 @@ const HistoryChart = ({dataChart = [], currentYear, onChangeYear}) => {
           <Pressable onPress={() => onChangeYear('prev')}>
             <PrevSVG />
           </Pressable>
-          <Text style={styles.yearText}>
-            {moment(currentYear).format('YYYY')}
-          </Text>
+          <Text style={styles.yearText}>{labelType}</Text>
           <Pressable onPress={() => onChangeYear('next')}>
             <NextSVG />
           </Pressable>
