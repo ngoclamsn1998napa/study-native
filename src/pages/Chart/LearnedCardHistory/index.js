@@ -1,0 +1,222 @@
+import moment from 'moment/moment';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Text, Pressable} from 'react-native';
+import {COLORS} from '../../../util/colors';
+import HistoryChart from '../../../components/HistoryChart';
+import ChartTitle from '../Title';
+
+const LearnedCardHistory = () => {
+  const [currentPicker, setCurrentPicker] = useState(1);
+  const [dataChart, setDataChart] = useState({
+    label: [],
+    data: [],
+    labelType: null,
+  });
+  const [currentYear, setCurrentYear] = useState(moment());
+
+  const generateChart = () => {
+    const newArr = [];
+    let label = [];
+    let labelType = null;
+    switch (currentPicker) {
+      case 1:
+        for (let i = 0; i < 7; i++) {
+          newArr.push(Math.floor(Math.random() * 300) + 1);
+          label = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+        }
+        const dateFormat = 'YYYY/MM/DD';
+        const startOfWeek = moment(currentYear).isoWeekday(1).startOf('week');
+        const endOfWeek = moment(currentYear).isoWeekday(1).endOf('week');
+        const startDate = startOfWeek.isoWeekday(1).format(dateFormat);
+        const endDate = endOfWeek.isoWeekday(1).format(dateFormat);
+        labelType = `${startDate} - ${endDate}`;
+        break;
+      case 2:
+        const daysIsMonth = moment(currentYear).daysInMonth();
+        for (let i = 0; i < daysIsMonth; i++) {
+          newArr.push(Math.floor(Math.random() * 300) + 1);
+        }
+        const numParts = 5; // Số phần tử trong mảng
+        const partSize = Math.floor(daysIsMonth / numParts); // Kích thước của mỗi phần tử
+        const remainder = daysIsMonth % numParts; // Phần dư
+        let currentValue = 1;
+        for (let i = 0; i < numParts; i++) {
+          label.push(currentValue);
+          currentValue += partSize;
+          if (i < remainder) {
+            currentValue += 1;
+          }
+        }
+        labelType = moment(currentYear).format('MM/YYYY');
+        break;
+      case 3:
+        for (let i = 0; i < 12; i++) {
+          newArr.push(Math.floor(Math.random() * 300) + 1);
+          label = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'June',
+            'July',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+          ];
+        }
+        labelType = moment(currentYear).format('YYYY');
+        break;
+    }
+    setDataChart({
+      data: newArr,
+      label,
+      labelType,
+    });
+  };
+
+  const onChangeYear = type => {
+    if (type === 'next') {
+      switch (currentPicker) {
+        case 1:
+          setCurrentYear(prev => moment(prev).add(1, 'weeks'));
+          break;
+        case 2:
+          setCurrentYear(prev => moment(prev).add(1, 'months'));
+          break;
+        case 3:
+          setCurrentYear(prev => moment(prev).add(1, 'years'));
+          break;
+
+        default:
+          break;
+      }
+    } else {
+      switch (currentPicker) {
+        case 1:
+          setCurrentYear(prev => moment(prev).subtract(1, 'weeks'));
+          break;
+        case 2:
+          setCurrentYear(prev => moment(prev).subtract(1, 'months'));
+          break;
+        case 3:
+          setCurrentYear(prev => moment(prev).subtract(1, 'years'));
+          break;
+
+        default:
+          break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    generateChart();
+  }, [currentPicker, currentYear]);
+  return (
+    <View style={styles.historyChart}>
+      <ChartTitle title="Learned Card History" />
+      <View style={styles.tabsPicker}>
+        <Pressable style={{flex: 1}} onPress={() => setCurrentPicker(1)}>
+          <View
+            style={[
+              styles.tabPicker,
+              currentPicker === 1 && styles.tabPickerActive,
+            ]}>
+            <Text
+              style={[
+                styles.tabPickerText,
+                currentPicker === 1 && styles.tabPickerTextActive,
+              ]}>
+              Week
+            </Text>
+          </View>
+        </Pressable>
+        <Pressable style={{flex: 1}} onPress={() => setCurrentPicker(2)}>
+          <View
+            style={[
+              styles.tabPicker,
+              currentPicker === 2 && styles.tabPickerActive,
+            ]}>
+            <Text
+              style={[
+                styles.tabPickerText,
+                currentPicker === 2 && styles.tabPickerTextActive,
+              ]}>
+              Month
+            </Text>
+          </View>
+        </Pressable>
+        <Pressable style={{flex: 1}} onPress={() => setCurrentPicker(3)}>
+          <View
+            style={[
+              styles.tabPicker,
+              currentPicker === 3 && styles.tabPickerActive,
+            ]}>
+            <Text
+              style={[
+                styles.tabPickerText,
+                currentPicker === 3 && styles.tabPickerTextActive,
+              ]}>
+              Year
+            </Text>
+          </View>
+        </Pressable>
+      </View>
+      <HistoryChart
+        onChangeYear={onChangeYear}
+        dataChart={dataChart.data}
+        label={dataChart.label}
+        labelType={dataChart.labelType}
+        currentYear={currentYear}
+        currentPicker={currentPicker}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  tabsPicker: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.white,
+    borderRadius: 8,
+    height: 50,
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    columnGap: 24,
+    justifyContent: 'space-around',
+  },
+  tabPicker: {
+    flex: 1,
+    textAlign: 'center',
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.orange3,
+  },
+  tabPickerText: {
+    fontWeight: 700,
+    color: COLORS.blueBlack,
+  },
+  tabPickerActive: {
+    backgroundColor: COLORS.orange2,
+  },
+  tabPickerTextActive: {
+    color: COLORS.white,
+  },
+  h1: {
+    color: COLORS.blueBlack,
+    fontSize: 20,
+    fontWeight: 700,
+    marginTop: 16,
+    marginBottom: 16,
+  },
+  historyChart: {
+    marginTop: 10,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+});
+
+export default LearnedCardHistory;
