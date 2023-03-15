@@ -6,8 +6,9 @@ import ChartClockSVG from '../../assets/icons/chart_clock.svg';
 import NoDataSVG from '../../assets/icons/no_data_chart.svg';
 import PrevSVG from '../../assets/icons/ic_chart_prev.svg';
 import NextSVG from '../../assets/icons/ic_chart_next.svg';
+import moment from 'moment';
 
-const HistoryChart = ({dataChart = []}) => {
+const HistoryChart = ({dataChart = [], currentYear, onChangeYear}) => {
   const isEmpty = !dataChart.length;
   const data = {
     labels: [
@@ -94,9 +95,15 @@ const HistoryChart = ({dataChart = []}) => {
         )}
 
         <View style={styles.year}>
-          <PrevSVG />
-          <Text style={styles.yearText}>2020</Text>
-          <NextSVG />
+          <Pressable onPress={() => onChangeYear('prev')}>
+            <PrevSVG />
+          </Pressable>
+          <Text style={styles.yearText}>
+            {moment(currentYear).format('YYYY')}
+          </Text>
+          <Pressable onPress={() => onChangeYear('next')}>
+            <NextSVG />
+          </Pressable>
         </View>
       </View>
     </View>

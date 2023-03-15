@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import moment from 'moment/moment';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Pressable} from 'react-native';
 import CircularProgress from '../../components/CircularProgress';
 import HistoryChart from '../../components/HistoryChart';
@@ -7,7 +8,28 @@ import {COLORS} from '../../util/colors';
 const ChartScreen = () => {
   const [currentTab, setCurrentTab] = useState(1);
   const [currentPicker, setCurrentPicker] = useState(1);
-  const dataChart = [48, 152, 147, 230, 180, 300, 77, 270, 188, 260, 233, 145];
+  const [dataChart, setDataChart] = useState([]);
+  const [currentYear, setCurrentYear] = useState(moment());
+
+  const generateChart = () => {
+    const newArr = [];
+    for (let i = 0; i < 12; i++) {
+      newArr.push(Math.floor(Math.random() * 300) + 1);
+    }
+    setDataChart(newArr);
+  };
+
+  const onChangeYear = type => {
+    if (type === 'next') {
+      setCurrentYear(prev => moment(prev).add(1, 'years'));
+    } else {
+      setCurrentYear(prev => moment(prev).subtract(1, 'years'));
+    }
+  };
+
+  useEffect(() => {
+    generateChart();
+  }, [currentPicker, currentYear]);
   return (
     <View style={styles.container}>
       <View style={styles.tabs}>
@@ -85,7 +107,11 @@ const ChartScreen = () => {
                 </View>
               </Pressable>
             </View>
-            <HistoryChart dataChart={dataChart} />
+            <HistoryChart
+              onChangeYear={onChangeYear}
+              dataChart={dataChart}
+              currentYear={currentYear}
+            />
           </View>
         )}
         {currentTab === 2 && (
@@ -95,7 +121,7 @@ const ChartScreen = () => {
             <CircularProgress
               size={270}
               strokeWidth={30}
-              progressPercent={10}
+              progressPercent={Math.floor(Math.random() * 100)}
             />
           </View>
         )}
