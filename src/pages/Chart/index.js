@@ -8,22 +8,102 @@ import {COLORS} from '../../util/colors';
 const ChartScreen = () => {
   const [currentTab, setCurrentTab] = useState(1);
   const [currentPicker, setCurrentPicker] = useState(1);
-  const [dataChart, setDataChart] = useState([]);
+  const [dataChart, setDataChart] = useState({
+    label: [],
+    data: [],
+    labelType: null,
+  });
   const [currentYear, setCurrentYear] = useState(moment());
 
   const generateChart = () => {
     const newArr = [];
-    for (let i = 0; i < 12; i++) {
-      newArr.push(Math.floor(Math.random() * 300) + 1);
+    let label = [];
+    let labelType = null;
+    switch (currentPicker) {
+      case 1:
+        for (let i = 0; i < 7; i++) {
+          newArr.push(Math.floor(Math.random() * 300) + 1);
+          label = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+        }
+        const dateFormat = 'YYYY/MM/DD';
+        const startOfWeek = currentYear.startOf('week');
+        const endOfWeek = currentYear.endOf('week');
+        const startDate = startOfWeek.format(dateFormat);
+        const endDate = endOfWeek.format(dateFormat);
+        labelType = `${startDate} - ${endDate}`;
+        break;
+      case 2:
+        const daysIsMonth = moment(currentYear).daysInMonth();
+        for (let i = 0; i < daysIsMonth; i++) {
+          newArr.push(Math.floor(Math.random() * 300) + 1);
+        }
+        const labelsCount = 6;
+        const daysPerLabel = Math.ceil(daysIsMonth / labelsCount);
+        for (let i = 0; i < labelsCount; i++) {
+          const day = i * daysPerLabel + 1;
+          label.push(day);
+        }
+        labelType = moment(currentYear).format('MM/YYYY');
+        break;
+      case 3:
+        for (let i = 0; i < 12; i++) {
+          newArr.push(Math.floor(Math.random() * 300) + 1);
+          label = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'June',
+            'July',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+          ];
+        }
+        labelType = moment(currentYear).format('YYYY');
+        break;
     }
-    setDataChart(newArr);
+    setDataChart({
+      data: newArr,
+      label,
+      labelType,
+    });
   };
 
   const onChangeYear = type => {
     if (type === 'next') {
-      setCurrentYear(prev => moment(prev).add(1, 'years'));
+      switch (currentPicker) {
+        case 1:
+          setCurrentYear(prev => moment(prev).add(1, 'weeks'));
+          break;
+        case 2:
+          setCurrentYear(prev => moment(prev).add(1, 'months'));
+          break;
+        case 3:
+          setCurrentYear(prev => moment(prev).add(1, 'years'));
+          break;
+
+        default:
+          break;
+      }
     } else {
-      setCurrentYear(prev => moment(prev).subtract(1, 'years'));
+      switch (currentPicker) {
+        case 1:
+          setCurrentYear(prev => moment(prev).subtract(1, 'weeks'));
+          break;
+        case 2:
+          setCurrentYear(prev => moment(prev).subtract(1, 'months'));
+          break;
+        case 3:
+          setCurrentYear(prev => moment(prev).subtract(1, 'years'));
+          break;
+
+        default:
+          break;
+      }
     }
   };
 
@@ -109,8 +189,11 @@ const ChartScreen = () => {
             </View>
             <HistoryChart
               onChangeYear={onChangeYear}
-              dataChart={dataChart}
+              dataChart={dataChart.data}
+              label={dataChart.label}
+              labelType={dataChart.labelType}
               currentYear={currentYear}
+              currentPicker={currentPicker}
             />
           </View>
         )}
