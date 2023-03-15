@@ -37,11 +37,16 @@ const ChartScreen = () => {
         for (let i = 0; i < daysIsMonth; i++) {
           newArr.push(Math.floor(Math.random() * 300) + 1);
         }
-        const labelsCount = 6;
-        const daysPerLabel = Math.ceil(daysIsMonth / labelsCount);
-        for (let i = 0; i < labelsCount; i++) {
-          const day = i * daysPerLabel + 1;
-          label.push(day);
+        const numParts = 5; // Số phần tử trong mảng
+        const partSize = Math.floor(daysIsMonth / numParts); // Kích thước của mỗi phần tử
+        const remainder = daysIsMonth % numParts; // Phần dư
+        let currentValue = 1;
+        for (let i = 0; i < numParts; i++) {
+          label.push(currentValue);
+          currentValue += partSize;
+          if (i < remainder) {
+            currentValue += 1;
+          }
         }
         labelType = moment(currentYear).format('MM/YYYY');
         break;
